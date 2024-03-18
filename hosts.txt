@@ -1,0 +1,5 @@
+[all:vars]
+ansible_network_os=cisco.fmcansible.fmc
+
+[vfmc]
+10.1.1.1 ansible_user=ansibleadmin ansible_password=ansiblePASSWORD123! ansible_httpapi_port=443 ansible_httpapi_use_ssl=True  ansible_httpapi_validate_certs=True

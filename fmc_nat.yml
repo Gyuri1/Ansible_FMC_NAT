@@ -1,0 +1,57 @@
+- hosts: all
+  connection: httpapi
+  tasks:
+    - name: Get Domain
+      cisco.fmcansible.fmc_configuration:
+        operation: getAllDomain
+        register_as: domain
+
+    - name: Get all SecurityZone objects
+      cisco.fmcansible.fmc_configuration:
+        operation: getAllSecurityZoneObject
+        path_params:
+          domainUUID: '{{ domain[0].uuid }}'
+        register_as: zones      
+
+    - name: Create NAT Policy
+      cisco.fmcansible.fmc_configuration:
+        operation: upsertFTDNatPolicy
+        data:
+          name: NAT-Policy-1
+          type: FTDNatPolicy
+        path_params:
+          domainUUID: '{{ domain[0].uuid }}'
+        register_as: natpolicy
+
+
+    - name: Load CSV Data into object
+      read_csv:
+        path: 'nat-rules.csv'
+        #fieldnames: OriginalSource,TranslatedSource
+        delimiter: ','
+      register: csv_output       
+
+    - name: Create an original empty list
+      set_fact: 
+        original_id: []
+
+    - name: Create an translated empty list      
+      set_fact: 
+        translated_id: []  
+
+    - include_tasks: fmc_get_objectID.yml
+      loop: "{{ csv_output.list }}"
+      loop_control:
+        extended: yes
+        label: "{{ ansible_loop.index0 }}"    
+
+    - include_tasks: fmc_nat_function.yml
+      loop: "{{ original_id  }}"
+      loop_control:
+        extended: yes
+        label: "{{ ansible_loop.index0 }}"
+        index_var: my_idx
+
+
+
+

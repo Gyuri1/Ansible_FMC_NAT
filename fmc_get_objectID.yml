@@ -1,0 +1,77 @@
+---
+# Get Object ID 
+- name: Get a original host object ID
+  cisco.fmcansible.fmc_configuration:
+    operation: getAllHostObject
+    query_params:
+      filter: 'nameOrValue:{{item.OriginalSource}}'
+    path_params:
+      domainUUID: '{{ domain[0].uuid }}'
+    register_as: original_id1
+  
+
+- name: Create a new object
+  cisco.fmcansible.fmc_configuration:
+    operation: "createMultipleHostObject"
+    data:
+        name: "{{item.OriginalSource}}"
+        type: Host
+        value: "{{item.OriginalSource}}"
+        description: 'Ansible created: {{ item.OriginalSource }}'
+    path_params:
+        domainUUID: "{{ domain[0].uuid }}"
+    register_as: original_id2  
+  when: original_id1 | length == 0
+  
+
+- name: Get a original host object ID
+  cisco.fmcansible.fmc_configuration:
+    operation: getAllHostObject
+    query_params:
+      filter: 'nameOrValue:{{item.OriginalSource}}'
+    path_params:
+      domainUUID: '{{ domain[0].uuid }}'
+    register_as: original_id1
+  when: original_id1 | length == 0  
+
+- name: Update the original vars
+  set_fact:
+    original_id: "{{ original_id + original_id1 }}"   
+
+- name: Get a translated host object ID
+  cisco.fmcansible.fmc_configuration:
+    operation: getAllHostObject
+    query_params:
+      filter: 'nameOrValue:{{item.TranslatedSource}}'
+    path_params:
+      domainUUID: '{{ domain[0].uuid }}'
+    register_as: translated_id1
+
+
+- name: Create a new object
+  cisco.fmcansible.fmc_configuration:
+    operation: "createMultipleHostObject"
+    data:
+        name: "{{item.TranslatedSource}}"
+        type: Host
+        value: "{{item.TranslatedSource}}"
+        description: 'Ansible created: {{ item.TranslatedSource }}'
+    path_params:
+        domainUUID: "{{ domain[0].uuid }}"
+    register_as: translated_id2  
+  when: translated_id1 | length == 0
+
+
+- name: Get a translated host object ID
+  cisco.fmcansible.fmc_configuration:
+    operation: getAllHostObject
+    query_params:
+      filter: 'nameOrValue:{{item.TranslatedSource}}'
+    path_params:
+      domainUUID: '{{ domain[0].uuid }}'
+    register_as: translated_id1
+  when: translated_id1 | length == 0
+
+- name: Update the translated vars
+  set_fact:
+    translated_id: "{{ translated_id + translated_id1 }}"    

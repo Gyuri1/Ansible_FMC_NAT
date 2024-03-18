@@ -1,0 +1,22 @@
+---
+# Create NAT 
+- name: Setup an inside-outside NAT rule
+  cisco.fmcansible.fmc_configuration:
+    operation: upsertFTDManualNatRule
+    data:
+      # note that name isn't actually stored
+      # providing a name property will force an update even if object already matches wheat's on server
+      # name: InsideOutsideNatRule
+      natType: STATIC
+      destinationInterface: "{{ zones[0] }}"
+      sourceInterface: "{{ zones[1] }}"
+      originalSource: "{{ original_id[my_idx] }}"
+      translatedSource: "{{ translated_id[my_idx] }}"
+      interfaceInTranslatedSource: False
+      dns: False
+      enabled: True
+      type: FTDManualNatRule
+    path_params:
+      containerUUID: '{{ natpolicy.id }}'
+      domainUUID: '{{ domain[0].uuid }}'
+  
