@@ -13,11 +13,11 @@ If a host object, such as '10.1.1.1', does not already exist in the FMC, the scr
  
 `ansible-galaxy collection install cisco.fmcansible`
 
-Please download each file from this repo into a working directory!
+Please ensure to download all the files from this repository into your working directory.  
 
 # How to run:  
 
-Please modify the host.txt according to the FMC parameters and credentials!
+Please modify the `host.txt` according to the FMC parameters and credentials!
 
   `ansible-playbook -i hosts.txt fmc_nat.yml -vvv`
 
@@ -34,5 +34,5 @@ https://developer.cisco.com/docs/fmc-ansible/#!introduction/introduction-to-fire
 https://developer.cisco.com/docs/fmc-ansible/7.3/#!operation-index-for-fmc
 
 
-Please test it in a test environment!
+Please perform your testing in a designated test environment rather than in production!
 
