@@ -23,10 +23,10 @@ Please modify the host.txt according to the FMC parameters and credentials!
 
 Where: 
 
-`ansible-playbook` is the name of Ansible application
-`-i host` is the the access definition of the FMC
-`fmc_nat.yml` is the name of the script
-`-vvv` indicates the optional debug operation
+`ansible-playbook` is the name of Ansible application  
+`-i host` is the the access definition of the FMC  
+`fmc_nat.yml` is the name of the script  
+`-vvv` indicates the optional debug operation  
 
 
 # More information:  
