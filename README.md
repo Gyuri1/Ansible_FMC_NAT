@@ -1,6 +1,7 @@
 # Ansible_FMC_NAT
 
 This Ansible YAML script creates an FMC NAT Policy from a CSV file.
+This script creates new host objects (like 10.1.1.1) if it is not defined yet in FMC.
 
 
 # How to install:  
@@ -31,3 +32,7 @@ Where:
 # More information:  
 https://developer.cisco.com/docs/fmc-ansible/#!introduction/introduction-to-firewall-management-center
 https://developer.cisco.com/docs/fmc-ansible/7.3/#!operation-index-for-fmc
+
+
+Please test it in a test environment!
+
