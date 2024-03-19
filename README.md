@@ -28,6 +28,7 @@ Where:
 `fmc_nat.yml` is the name of the script  
 `-vvv` indicates the optional debug operation  
 
+![FMC NAT Policy](FMC-NAT.png)
 
 # More information:  
 https://developer.cisco.com/docs/fmc-ansible/#!introduction/introduction-to-firewall-management-center
